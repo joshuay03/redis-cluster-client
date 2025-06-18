@@ -69,8 +69,20 @@ class RedisClient
       "#<#{self.class.name} #{startup_nodes.values.map { |v| v.reject { |k| k == :command_builder } }}>"
     end
 
+    def connect_timeout
+      @client_config[:connect_timeout] || @client_config[:timeout] || ::RedisClient::Config::DEFAULT_TIMEOUT
+    end
+
     def read_timeout
       @client_config[:read_timeout] || @client_config[:timeout] || ::RedisClient::Config::DEFAULT_TIMEOUT
+    end
+
+    def write_timeout
+      @client_config[:write_timeout] || @client_config[:timeout] || ::RedisClient::Config::DEFAULT_TIMEOUT
+    end
+
+    def reconnect_attempts
+      @client_config[:reconnect_attempts] || false
     end
 
     def new_pool(size: 5, timeout: 5, **kwargs)

@@ -24,7 +24,10 @@ class RedisClient
 
       def test_config
         refute_nil @client.config
+        refute_nil @client.config.connect_timeout
         refute_nil @client.config.read_timeout
+        refute_nil @client.config.write_timeout
+        refute_nil @client.config.reconnect_attempts
       end
 
       def test_inspect
